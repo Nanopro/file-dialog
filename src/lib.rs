@@ -20,7 +20,7 @@ use winapi::um::{
 
 pub fn open_dialog<T: Sized>(hwnd: *mut T) -> Option<String> {
     let mut open: OPENFILENAMEA = unsafe { std::mem::zeroed() };
-    let mut cs: Vec<c_char> = Vec::with_capacity(512);
+    let mut cs: Vec<c_char> = vec![0; 512];
     open.lStructSize = std::mem::size_of::<OPENFILENAMEA>() as _;
     open.hwndOwner = unsafe { std::mem::transmute(hwnd) };
     open.lpstrFile = unsafe { std::mem::transmute(cs.as_mut_ptr()) };
@@ -35,9 +35,9 @@ pub fn open_dialog<T: Sized>(hwnd: *mut T) -> Option<String> {
     }
 }
 
-pub fn open_dialog_windowless<T: Sized>() -> Option<String> {
+pub fn open_dialog_windowless() -> Option<String> {
     let mut open: OPENFILENAMEA = unsafe { std::mem::zeroed() };
-    let mut cs: Vec<c_char> = Vec::with_capacity(512);
+    let mut cs: Vec<c_char> = vec![0; 512];
     open.lStructSize = std::mem::size_of::<OPENFILENAMEA>() as _;
     open.lpstrFile = unsafe { std::mem::transmute(cs.as_mut_ptr()) };
     open.nMaxFile = 512;
@@ -53,7 +53,7 @@ pub fn open_dialog_windowless<T: Sized>() -> Option<String> {
 
 pub fn save_dialog<T: Sized>(hwnd: *mut T) -> Option<String> {
     let mut open: OPENFILENAMEA = unsafe { std::mem::zeroed() };
-    let mut cs: Vec<c_char> = Vec::with_capacity(512);
+    let mut cs: Vec<c_char> = vec![0; 512];
     open.lStructSize = std::mem::size_of::<OPENFILENAMEA>() as _;
     open.hwndOwner = unsafe { std::mem::transmute(hwnd) };
     open.lpstrFile = unsafe { std::mem::transmute(cs.as_mut_ptr()) };
@@ -67,9 +67,9 @@ pub fn save_dialog<T: Sized>(hwnd: *mut T) -> Option<String> {
         None
     }
 }
-pub fn save_dialog_windowless<T: Sized>() -> Option<String> {
+pub fn save_dialog_windowless() -> Option<String> {
     let mut open: OPENFILENAMEA = unsafe { std::mem::zeroed() };
-    let mut cs: Vec<c_char> = Vec::with_capacity(512);
+    let mut cs: Vec<c_char> = vec![0; 512];
     open.lStructSize = std::mem::size_of::<OPENFILENAMEA>() as _;
     open.lpstrFile = unsafe { std::mem::transmute(cs.as_mut_ptr()) };
     open.nMaxFile = 512;
